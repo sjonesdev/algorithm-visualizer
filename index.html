@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="/assets/fontawesome5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;400;600;700&display=swap" rel="stylesheet">
+    <link type="text/css" href="/assets/bootstrap5.0.1/css/bootstrap.min.css">
+
+    <link href="css/styles.css" rel="stylesheet">
+
+    <title>Algorithm Visualizer</title>
+</head>
+<body>
+    
+    <div id="controls">
+        <header>
+            <div class="title">
+                <h1>Algorithm Visualizer</h1>
+            </div>
+            <div id="algo-type-picker" class="dropdown">
+                <label for="algo-type">Algorithm Type: </label>
+                <select name="algo-type" id="algo-type">
+                    <option value="pathfinding">Pathfinding</option>
+                    <option value="sorting">Sorting</option>
+                </select>
+            </div>
+            <div id="path-algo-picker" class="algo-picker dropdown"><label for=""></label>
+                <label for="path-algo">Algorithm: </label>
+                <select name="path-algo" id="path-algo">
+                    <option value="dijkstra">Dijkstra's Algorithm</option>
+                    <option value="astar">A* Algorithm</option>
+                    <option value="sample">Sample Algorithm</option>
+                    <option value="breadth-first">Breadth-First Search</option>
+                    <option value="depth-first">Depth-First Search</option>
+                </select>
+            </div>
+            <div id="sort-algo-picker" class="algo-picker dropdown hidden"><label for=""></label>
+                <label for="sort-algo">Algorithm: </label>
+                <select name="sort-algo" id="sort-algo">
+                    <option value="">Selection Sort</option>
+                    <option value="">Bubble Sort</option>
+                    <option value="">Insertion Sort</option>
+                    <option value="">Merge Sort</option>
+                    <option value="">Quick Sort</option>
+                    <option value="">Heap Sort</option>
+                    <option value="">Counting Sort</option>
+                    <option value="">Radix Sort</option>
+                    <option value="">Bucket Sort</option>
+                    <option value="">Shell Sort</option>
+                    <option value="">Tim Sort</option>
+                    <option value="">Comb Sort</option>
+                    <option value="">Pigeonhole Sort</option>
+                    <option value="">Cycle Sort</option>
+                    <option value="">Cocktail Sort</option>
+                    <option value="">Strand Sort</option>
+                    <option value="">Bitonic Sort</option>
+                    <option value="">Pancake Sort</option>
+                    <option value="">Binary Insertion Sort</option>
+                    <option value="">Bogo Sort</option>
+                    <option value="">Gnome Sort</option>
+                    <option value="">Sleep Sort</option>
+                    <option value="">Structure Sorting</option>
+                    <option value="">Stooge Sort</option>
+                    <option value="">Tag Sort</option>
+                    <option value="">Tree Sort</option>
+                    <option value="">Cartesian Tree Sorting</option>
+                    <option value="">Odd-Even Sort</option>
+                </select>
+            </div>
+            <button class="btn" id="run-btn">Run</button>
+            <button class="btn" id="reset-btn">Reset</button>
+        </header>
+    </div>
+
+    <div id="info">
+        <p id="count"></p>
+    </div>
+
+    <script src="js/index.js" type="module"></script>
+    <script src="/assets/bootstrap5.0.1/js/bootstrap.bundle.js"></script>
+</body>
+</html>
