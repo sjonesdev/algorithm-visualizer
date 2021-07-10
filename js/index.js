@@ -1,3 +1,7 @@
+//Note - This program is set up to support private fields when support 
+//becomes more widely available with only minor refactoring. Currently,
+//fields that are supposed to be private start with p instead of # or _ 
+
 import Node from './Node.js';
 import Board from './Board.js';
 import { dijkstra, aStar, sample, breadthFirst, depthFirst } from './path-algos.js';

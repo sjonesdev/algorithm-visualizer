@@ -7,28 +7,28 @@ import AnimationPlan from './AnimationPlan.js';
 class Board {
 
     /** @type {HTMLElement} */
-    #boardDiv;
+    pboardDiv;
 
     /** @type {number} */
-    #rows;
+    prows;
 
     /** @type {number} */
-    #cols;
+    pcols;
 
     /** @type {Array.HTMLElement} */
-    #divs = [];
+    pdivs = [];
 
     /** @type {Array.<Node>} */
-    #nodes = [];
+    pnodes = [];
 
     /** @type {Node} */
-    #start;
+    pstart;
 
     /** @type {Node} */
-    #target;
+    ptarget;
 
     /** @type {AnimationPlan} */
-    #animation;
+    panimation;
 
     /**
      * @constructor Constructs a new board of Nodes of the specified dimensions.
@@ -36,28 +36,28 @@ class Board {
      * @param {number} columns The number of columns to initialize in the board.
      */
     constructor(rows, columns) {
-        this.#rows = rows;
-        this.#cols = columns;
+        this.prows = rows;
+        this.pcols = columns;
         const docbody = document.getElementsByTagName('body')[0];
-        this.#boardDiv = document.createElement('div');
-        this.#boardDiv.id = 'board';
-        docbody.append(this.#boardDiv);
+        this.pboardDiv = document.createElement('div');
+        this.pboardDiv.id = 'board';
+        docbody.append(this.pboardDiv);
 
         for(let i = 0; i < rows; i++) {
-            this.#divs[i] = [];
-            this.#nodes[i] = [];
+            this.pdivs[i] = [];
+            this.pnodes[i] = [];
             let row = document.createElement('div');
             row.classList = 'row'
             row.id = 'row-' + i;
-            this.#boardDiv.append(row);
+            this.pboardDiv.append(row);
             for(let j = 0; j < columns; j++) {
                 let square = document.createElement('div');
                 square.classList = 'square'
                 square.id = `square-${i}-${j}`;
-                this.#divs[i][j] = square;
+                this.pdivs[i][j] = square;
                 row.append(square);
                 let index = i*columns + j;
-                this.#nodes[i][j] = new Node(i, j, index, square);
+                this.pnodes[i][j] = new Node(i, j, index, square);
             }
         }
         this.animation = new AnimationPlan();
@@ -69,25 +69,25 @@ class Board {
      * The number of rows in the board.
      */
     get rows() {
-        return this.#rows;
+        return this.prows;
     }
 
     /**
      * The number of columns in the board.
      */
     get cols() {
-        return this.#cols;
+        return this.pcols;
     }
 
     /**
      * The start node of the board. 
      */
     get start() {
-        return this.#start;
+        return this.pstart;
     }
 
     get animation() {
-        return this.#animation;
+        return this.panimation;
     }
 
     /**
@@ -96,7 +96,7 @@ class Board {
     set start(node) {
         const compNode = this.getNode(node.row, node.col);
         if(!Object.is(compNode, node)) return;
-        this.#start = node;
+        this.pstart = node;
         node.makeStart();
     }
 
@@ -104,7 +104,7 @@ class Board {
      * The target node of the board.
      */
     get target() {
-        return this.#target;
+        return this.ptarget;
     }
 
     /**
@@ -113,12 +113,12 @@ class Board {
      set target(node) {
         const compNode = this.getNode(node.row, node.col);
         if(!Object.is(compNode, node)) return;
-        this.#target = node;
+        this.ptarget = node;
         node.makeTarget();
     }
 
     set animation(anim) {
-        this.#animation = anim;
+        this.panimation = anim;
     }
 
     /**
@@ -154,11 +154,11 @@ class Board {
      */
     getNode(row, col) {
         const atTop = row < 0;
-        const atBottom = row >= this.#rows;
+        const atBottom = row >= this.prows;
         const atLeft = col < 0;
-        const atRight = col >= this.#cols; 
+        const atRight = col >= this.pcols; 
         if(atTop || atBottom || atLeft || atRight) return null;
-        return this.#nodes[row][col];
+        return this.pnodes[row][col];
     }
     
     /**
@@ -168,10 +168,10 @@ class Board {
      * @returns {Node|null} The node at the specified index if it exists, null if not.
      */
     getNodeByIndex(index) {
-        if(index >= this.#cols*this.#rows) return null;
-        const col = index % this.#cols;
-        const row = Math.floor(index / this.#cols);
-        return this.#nodes[row][col];
+        if(index >= this.pcols*this.prows) return null;
+        const col = index % this.pcols;
+        const row = Math.floor(index / this.pcols);
+        return this.pnodes[row][col];
     }
 
     /**
@@ -192,15 +192,15 @@ class Board {
     }
 
     pauseAnimation() {
-        this.#animation.stop();
+        this.panimation.stop();
     }
 
     playAnimation() {
-        this.#animation.run();
+        this.panimation.run();
     }
 
     resetAnimation() {
-        this.#animation = new AnimationPlan();
+        this.panimation = new AnimationPlan();
     }
 }
 

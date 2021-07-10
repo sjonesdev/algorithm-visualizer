@@ -6,34 +6,34 @@ import Node from "./Node.js";
 class AnimationPlan {
     
     /** @type {Array.<Node>} */
-    #visitplan = [];
+    pvisitplan = [];
 
     /** @type {Array.<Node>} */
-    #pathplan = [];
+    ppathplan = [];
 
-    #id = null;
+    pid = null;
 
     /**
      * @type {number} The number of the steps in the visit plan.
      */
     get visitSteps() {
-        return this.#visitplan.length;
+        return this.pvisitplan.length;
     }
 
     /**
      * @type {number} The number of steps in the path plan.
      */
     get pathSteps() {
-        return this.#pathplan.length;
+        return this.ppathplan.length;
     }
 
     get id() {
-        return this.#id;
+        return this.pid;
     }
 
     set id(newid) {
         clearInterval(this.id);
-        this.#id = newid;
+        this.pid = newid;
     }
 
     /**
@@ -43,7 +43,7 @@ class AnimationPlan {
      */
     pushVisitStep(node) {
         if(!node) return;
-        this.#visitplan.push(node);
+        this.pvisitplan.push(node);
     }
 
     /**
@@ -52,7 +52,7 @@ class AnimationPlan {
      * @returns {Node} The node popped or undefined if the stack is empty. 
      */
     popVisitStep() {
-        return this.#visitplan.shift();
+        return this.pvisitplan.shift();
     }
 
     /**
@@ -61,7 +61,7 @@ class AnimationPlan {
      * @param {Node} node The node to push.
      */
     pushPathStep(node) {
-        this.#pathplan.push(node);
+        this.ppathplan.push(node);
     }
 
     /**
@@ -70,21 +70,21 @@ class AnimationPlan {
      * @returns {Node} The node popped or undefined if the stack is empty.
      */
     popPathStep() {
-        return this.#pathplan.shift();
+        return this.ppathplan.shift();
     }
 
     reset() {
-        this.#visitplan = [];
-        this.#pathplan = [];
-        clearInterval(this.#id);
-        this.#id = null;
+        this.pvisitplan = [];
+        this.ppathplan = [];
+        clearInterval(this.pid);
+        this.pid = null;
     }
 
     /**
      * Runs the pathfinding and then path traveling animations stored in this animation plan. Empties the AnimationPlan instance in the process.
      */
     run() {
-        this.#id = setInterval(animateVisit, 10, this);
+        this.pid = setInterval(animateVisit, 10, this);
         //let pathInterval = null;
 
         //animates the visit portion of the animation then passes on to path
@@ -112,7 +112,7 @@ class AnimationPlan {
     }
 
     stop() {
-        clearInterval(this.#id);
+        clearInterval(this.pid);
     }
 }
 

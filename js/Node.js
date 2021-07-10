@@ -4,7 +4,7 @@ const NORMAL_WEIGHT = 1;
 
 /**
  * A single element of a grid, used for demonstrating pathfinding algorithms.
- */
+ */ 
 class Node {
     static START = 'start';
     static TARGET = 'target';
@@ -16,25 +16,25 @@ class Node {
     static PATH = 'path'
 
     /** @type {number} */
-    #col; 
+    pcol; 
 
     /** @type {number} */
-    #row; 
+    prow; 
 
     /** @type {number} */
-    #index; 
+    pindex; 
 
     /** @type {boolean} */
-    #weighted;
+    pweighted;
 
     /** @type {HTMLElement} */
-    #square;
+    psquare;
 
     /** @type {string} */
-    #type;
+    ptype;
 
     /** @type {string} */
-    #state;
+    pstate;
 
     /**
      * @constructor Makes a new Node object.
@@ -43,90 +43,90 @@ class Node {
      * @param {string} type The type of node. (optional)
      */
     constructor(row, col, index, div=null, type=Node.NORMAL) {
-        this.#col = col;
-        this.#row = row;
-        this.#index = index;
-        this.#weighted = false;
-        if(div) this.#square = div;
-        else this.#square = document.getElementById(`square-${row}-${col}`);
-        this.#type = type;
+        this.pcol = col;
+        this.prow = row;
+        this.pindex = index;
+        this.pweighted = false;
+        if(div) this.psquare = div;
+        else this.psquare = document.getElementById(`square-${row}-${col}`);
+        this.ptype = type;
         if(type === Node.NORMAL)
-            this.#state = Node.UNVISITED;
+            this.pstate = Node.UNVISITED;
         else
-            this.#state = null;
+            this.pstate = null;
     }
 
     /**
      * @returns {number} The column of the node.
      */
     get col() {
-        return this.#col;
+        return this.pcol;
     }
 
     /**
      * @returns {number} The row of the node.
      */
     get row() {
-        return this.#row;
+        return this.prow;
     }
 
     /**
      * @returns {number} The index of the node.
      */
     get index() {
-        return this.#index;
+        return this.pindex;
     }
 
     /** 
      * @returns {number} The weight value of the node.
      */
     get weight() {
-        return (this.#weighted ? NORMAL_WEIGHT : HEAVY_WEIGHT);
+        return (this.pweighted ? HEAVY_WEIGHT : NORMAL_WEIGHT);
     }
 
     /**
      * @returns {HTMLElement} The div corresponding to the node
      */
     get square() {
-        return this.#square;
+        return this.psquare;
     }
 
     /**
      * @returns {string} The type of the node (start, target, normal, or wall).
      */
     get type() {
-        return this.#type;
+        return this.ptype;
     }
 
     /**
      * @returns {boolean} True if the node is weighted more heavily than normal.
      */
     get weighted() {
-        return this.#weighted;
+        return this.pweighted;
     }
 
     /**
      * @returns {string} The state of the node (unvisited, visited, or path).
      */
     get state() {
-        return this.#state;
+        return this.pstate;
     }
 
     /**
      * @param {string} newtype The new type to set the node to. Use one of the available constants.
      */
     set type(newtype) {
-        this.#type = newtype;
-        this.#square.classList = `square ${newtype}` + (this.#weighted ? ' square--weighted' : '');
+        this.ptype = newtype;
+        this.psquare.classList = `square ${newtype}` + (this.pweighted ? ' square--weighted' : '');
     }
 
     /**
      * @param {string} newstate The new state to set the node to. Use one of the available constants.
      */
     set state(newstate) {
-        this.#square.classList.remove(this.#state);
-        this.#state = newstate;
-        this.#square.classList.add(newstate);
+        this.psquare.classList.remove(this.pstate);
+        this.pstate = newstate;
+        this.psquare.classList.add(newstate);
     }
 
     /**
@@ -165,16 +165,16 @@ class Node {
      * Increases the weight of the node if not already.
      */
     weighdown() {
-        this.#weighted = true;
-        this.#square.classList.add('square--weighted');
+        this.pweighted = true;
+        this.psquare.classList.add('square--weighted');
     }
 
     /**
      * Lightens the node to default weight if not already.
      */
     lighten() {
-        this.#weighted = false;
-        this.#square.classList.remove('square--weighted');
+        this.pweighted = false;
+        this.psquare.classList.remove('square--weighted');
     }
 
     /**

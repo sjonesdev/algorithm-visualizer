@@ -5,13 +5,14 @@ const right = i => (i + 1) << 1;
 
 class NodeMinHeap {
 
-  #priorities = [];
-  #heap = [];
+  ppriorities = [];
+  psecPriorities = [];
+  pheap = [];
 
   constructor() {}
 
   get size() {
-    return this.#heap.length;
+    return this.pheap.length;
   }
 
   isEmpty() {
@@ -19,34 +20,36 @@ class NodeMinHeap {
   }
 
   peek() {
-    return [this.#heap[top], this.#priorities[this.#heap[top].index]];
+    return [this.pheap[top], this.ppriorities[this.pheap[top].index], this.psecPriorities[this.pheap[top].index]];
   }
   
-  push(node, priority) {
-    this.#heap.push(node);
-    this.#priorities[node.index] = priority;
-    this.#siftTopUp();
+  push(node, priority, secondPriority) {
+    this.pheap.push(node);
+    this.ppriorities[node.index] = priority;
+    this.psecPriorities[node.index] = secondPriority;
+    this.psiftTopUp();
     return this.size;
   }
 
   pop() {
     const poppedValue = this.peek();
-    this.#priorities[poppedValue[0].index] = undefined;
+    this.ppriorities[poppedValue[0].index] = undefined;
+    //this.psecPriorities[poppedValue[0].index] = undefined;
     const bottom = this.size - 1;
     if (bottom > top) {
-      this.#swap(top, bottom);
+      this.pswap(top, bottom);
     }
-    this.#heap.pop();
-    this.#siftTopDown();
+    this.pheap.pop();
+    this.psiftTopDown();
     return poppedValue;
   }
 
   replace(node) {
     const replacedValue = this.peek();
-    this.#priorities[replacedValue[0].index] = undefined; //resetting priority at previous top nodes index
-    this.#heap[top] = node;
-    this.#priorities[node.index] = replacedValue[1]; //giving the new node the same priority as the old
-    this.#siftTopDown();
+    this.ppriorities[replacedValue[0].index] = undefined; //resetting priority at previous top nodes index
+    this.pheap[top] = node;
+    this.ppriorities[node.index] = replacedValue[1]; //giving the new node the same priority as the old
+    this.psiftTopDown();
     return replacedValue;
   }
 
@@ -57,8 +60,16 @@ class NodeMinHeap {
    * @param {number} j The index of the second node.
    * @returns True if the priority of the node in the heap at index i is less than the priority of ... at j.
    */
-  #less(i, j) {
-    return this.#priorities[this.#heap[i].index] < this.#priorities[this.#heap[j].index];
+  pless(i, j) {
+    return this.ppriorities[this.pheap[i].index] < this.ppriorities[this.pheap[j].index];
+  }
+
+  psecLess(i, j) {
+    return this.psecPriorities[this.pheap[i].index] < this.psecPriorities[this.pheap[j].index];
+  }
+
+  pequals(i, j) {
+    return this.ppriorities[this.pheap[i].index] === this.ppriorities[this.pheap[j].index];
   }
 
   /**
@@ -66,60 +77,100 @@ class NodeMinHeap {
    * @param {number} i Index of the first node to be swapped.
    * @param {number} j Index of the second node.
    */
-  #swap(i, j) {
-    [this.#heap[i], this.#heap[j]] = [this.#heap[j], this.#heap[i]];
+  pswap(i, j) {
+    [this.pheap[i], this.pheap[j]] = [this.pheap[j], this.pheap[i]];
   }
 
-  #siftTopUp() {
-    this.#siftUp(this.size - 1);
+  psiftTopUp() {
+    this.psiftUp(this.size - 1);
   }
 
-  #siftUp(i) {
+  psiftUp(i) {
     let node = i;
     let parentNode = parent(node);
-    while (node > top && this.#less(node, parentNode)) {
-      this.#swap(node, parentNode);
+    while (node > top && this.pless(node, parentNode)) {
+      this.pswap(node, parentNode);
       node = parentNode;
       parentNode = parent(node);
     }
-  }
+    while(node > top && this.psecLess(node, parentNode)) {
+      this.pswap(node, parentNode);
+      node = parentNode;
+      parentNode = parent(node);
+    }
+}
   
-  #siftTopDown() {
-    this.#siftDown(top);
+  psiftTopDown() {
+    this.psiftDown(top);
   }
 
-  #siftDown(i) {
+  psiftDown(i) {
     let node = i;
     let leftNode = left(node);
     let rightNode = right(node);
     while (
-      (leftNode < this.size && this.#less(leftNode, node)) ||
-      (rightNode < this.size && this.#less(rightNode, node))
+      (leftNode < this.size && this.pless(leftNode, node)) ||
+      (rightNode < this.size && this.pless(rightNode, node))
     ) {
-      let minChild = (rightNode < this.size && this.#less(rightNode, leftNode)) ? rightNode : leftNode;
-      this.#swap(node, minChild);
+      let minChild = (rightNode < this.size && this.pless(rightNode, leftNode)) ? rightNode : leftNode;
+      this.pswap(node, minChild);
       node = minChild;
       leftNode = left(node);
       rightNode = right(node);
     }
+    while((leftNode < this.size && this.psecLess(leftNode, node)) ||
+       (rightNode < this.size && this.psecLess(rightNode, node)))
+      {
+        let minChild = (rightNode < this.size && this.psecLess(rightNode, leftNode)) ? rightNode : leftNode;
+        this.pswap(node, minChild);
+        node = minChild;
+        leftNode = left(node);
+        rightNode = right(node);
+      }
   }
 
   setPriority(node, priority) {
-    const oldPriority = this.#priorities[node.index];
+    const oldPriority = this.ppriorities[node.index];
     if(oldPriority === priority) return;
+    this.ppriorities[node.index] = priority;
     //swap node with top
-    let i = this.#heap.findIndex(element => element.index === node.index);
+    let i = this.pheap.findIndex(element => element.index === node.index);
     
     //sift down is priority increase and vice versa
     if(priority > oldPriority) {
-      this.#siftDown(i);
+      this.psiftDown(i);
     } else { //priority < oldPriority
-      this.#siftUp(i);
+      this.psiftUp(i);
+    }
+  }
+
+  setSecondPriority(node, priority) {
+    const oldPriority = this.psecPriorities[node.index];
+    if(oldPriority === priority) return;
+    this.psecPriorities[node.index] = priority;
+    //swap node with top
+    let i = this.pheap.findIndex(element => element.index === node.index);
+    
+    //sift down is priority increase and vice versa
+    if(priority > oldPriority) {
+      this.psiftDown(i);
+    } else { //priority < oldPriority
+      this.psiftUp(i);
     }
   }
 
   has(node) {
-    return this.#heap.includes(node);
+    return this.pheap.includes(node);
+  }
+
+  getPriority(node) {
+    return this.ppriorities[node.index];
+  }
+
+  getSecondaryPriority(node) {
+    const g = this.psecPriorities[node.index];
+    if(!g) return Infinity;
+    return g;
   }
 }
 

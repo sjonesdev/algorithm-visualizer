@@ -130,12 +130,12 @@ function aStar(board) {
         }
     }
     //priorityQueue.setPriority(startNode, h(startNode));
-    priorityQueue.push(startNode, h(startNode));
+    priorityQueue.push(startNode, h(startNode), 0);
     gArr[startNode.index] = 0;
 
     while(priorityQueue.size) {
         //get min from priorityqueue/minheap
-        const [minNode, minf] = priorityQueue.pop();
+        const [minNode, minf, minh] = priorityQueue.pop();
         animation.pushVisitStep(minNode);
 
         //if Object.is(min, targetNode), reconstruct path and return animation
@@ -164,15 +164,17 @@ function aStar(board) {
         for(let i in neighbors) {
             const cur = neighbors[i];
             if(!cur) continue;
-            const dist = minf + cur.weight;
+            const dist = gArr[minNode.index] + cur.weight;
             if(dist < gArr[cur.index]) {
                 prev[cur.index] = minNode;
                 gArr[cur.index] = dist;
-                const newf = dist + h(cur);
+                const heur = h(cur)
+                const newf = dist + heur;
                 if(priorityQueue.has(cur)) {
                     priorityQueue.setPriority(cur, newf);
+                    priorityQueue.setSecondPriority(cur, heur);
                 } else {
-                    priorityQueue.push(cur, newf);
+                    priorityQueue.push(cur, newf, heur);
                 }
             }
         }
