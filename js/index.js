@@ -4,7 +4,7 @@
 
 import Node from './Node.js';
 import Board from './Board.js';
-import { dijkstra, aStar, sample, breadthFirst, depthFirst } from './path-algos.js';
+import { dijkstra, aStar, breadthFirst, depthFirst } from './path-algos.js';
 import AnimationPlan from './AnimationPlan.js';
 
 const cols = 75, rows = 25;
@@ -51,6 +51,9 @@ function runPathAlgorithm(algo) {
             break;
         case 'astar':
             success = aStar(board);
+            break;
+        case 'breadth-first':
+            success = breadthFirst(board);
             break;
         default:
             success = false;
