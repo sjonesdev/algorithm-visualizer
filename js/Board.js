@@ -1,5 +1,5 @@
 import Node from './Node.js';
-import AnimationPlan from './AnimationPlan.js';
+import PathAnimationPlan from './PathAnimationPlan.js';
 
 /**
  * A class representing a div element containing a grid of Nodes, used for demonstrating pathfinding algorithms. There should only be one board per html file.
@@ -27,7 +27,7 @@ class Board {
     /** @type {Node} */
     ptarget;
 
-    /** @type {AnimationPlan} */
+    /** @type {PathAnimationPlan} */
     panimation;
 
     /**
@@ -60,7 +60,7 @@ class Board {
                 this.pnodes[i][j] = new Node(i, j, index, square);
             }
         }
-        this.animation = new AnimationPlan();
+        this.animation = new PathAnimationPlan();
         this.start = this.getNode(10, 10); //default start node
         this.target = this.getNode(15, 55); //default target node
     }
@@ -200,7 +200,11 @@ class Board {
     }
 
     resetAnimation() {
-        this.panimation = new AnimationPlan();
+        this.panimation = new PathAnimationPlan();
+    }
+
+    toggleHide() {
+        this.pboardDiv.classList.toggle('hidden');
     }
 }
 

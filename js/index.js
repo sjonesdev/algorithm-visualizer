@@ -4,12 +4,15 @@
 
 import Node from './Node.js';
 import Board from './Board.js';
+import ArrayGraph from './ArrayGraph.js';
 import { dijkstra, aStar, breadthFirst, depthFirst } from './path-algos.js';
-import AnimationPlan from './AnimationPlan.js';
+import PathAnimationPlan from './PathAnimationPlan.js';
 
 const cols = 75, rows = 25;
 const board = new Board(rows, cols);
-let boardAnimation;
+
+const numValues = 30;
+const arrGraph = new ArrayGraph(numValues);
 
 const algoTypePicker = document.getElementById('algo-type');
 const pathAlgoPickerDiv = document.getElementById('path-algo-picker');
@@ -17,9 +20,12 @@ const sortAlgoPickerDiv = document.getElementById('sort-algo-picker');
 const pathAlgoPicker = document.getElementById('path-algo');
 const sortAlgoPicker = document.getElementById('sort-algo');
 
+//TODO - fix this to ensure that the correct thing shows up according to the type selected, AKA not just toggling
 algoTypePicker.addEventListener('input', (e) => {
     pathAlgoPickerDiv.classList.toggle('hidden');
+    board.toggleHide();
     sortAlgoPickerDiv.classList.toggle('hidden');
+    arrGraph.toggleHide();
 });
 
 const runBtn = document.getElementById('run-btn');

@@ -3,7 +3,7 @@ import Node from "./Node.js";
 /**
  * Class to store animation plans for animating pathfinding algorithms. Contains FIFO stacks for pathing & visting and the number of steps in each stack.
  */
-class AnimationPlan {
+class PathAnimationPlan {
     
     /** @type {Array.<Node>} */
     pvisitplan = [];
@@ -81,7 +81,7 @@ class AnimationPlan {
     }
 
     /**
-     * Runs the pathfinding and then path traveling animations stored in this animation plan. Empties the AnimationPlan instance in the process.
+     * Runs the pathfinding and then path traveling animations stored in this animation plan. Empties the PathAnimationPlan instance in the process.
      */
     run() {
         this.pid = setInterval(animateVisit, 10, this);
@@ -116,4 +116,4 @@ class AnimationPlan {
     }
 }
 
-export default AnimationPlan;
+export default PathAnimationPlan;

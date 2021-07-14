@@ -1,6 +1,6 @@
 import Node from "./Node.js"
 import Board from "./Board.js";
-import AnimationPlan from "./AnimationPlan.js";
+import PathAnimationPlan from "./PathAnimationPlan.js";
 import NodeMinHeap from "./NodeMinHeap.js";
 
 
@@ -13,7 +13,7 @@ import NodeMinHeap from "./NodeMinHeap.js";
 function dijkstra(board) {
     console.log('Running Dijkstra\'s');
 
-    const animation = new AnimationPlan();
+    const animation = new PathAnimationPlan();
 
     //get start and target nodes
     const startNode = board.start;
@@ -104,7 +104,7 @@ function dijkstra(board) {
 function aStar(board) {
     console.log('Running A*');
 
-    const animation = new AnimationPlan();
+    const animation = new PathAnimationPlan();
 
     //get start and target nodes
     const startNode = board.start;
@@ -189,7 +189,7 @@ function aStar(board) {
 function breadthFirst(board) {
     console.log('Running Bread-First Search');
 
-    const animation = new AnimationPlan();
+    const animation = new PathAnimationPlan();
 
     //get start and target nodes
     const startNode = board.start;
@@ -257,7 +257,7 @@ function breadthFirst(board) {
 function depthFirst(board) {
     console.log('Running Depth-First Search');
 
-    const animation = new AnimationPlan();
+    const animation = new PathAnimationPlan();
 
     //get start and target nodes
     const startNode = board.start;
@@ -323,6 +323,15 @@ function depthFirst(board) {
     if(animation.pathSteps) return true;
     return false;
 }
+
+
+function bStar(board) {}
+
+
+function greedyBestFirst(board){}
+
+
+function iterDeepDepthFirst(board) {}
 
 
 
