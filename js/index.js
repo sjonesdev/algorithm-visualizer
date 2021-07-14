@@ -55,6 +55,9 @@ function runPathAlgorithm(algo) {
         case 'breadth-first':
             success = breadthFirst(board);
             break;
+        case 'depth-first':
+            success = depthFirst(board);
+            break;
         default:
             success = false;
             break;

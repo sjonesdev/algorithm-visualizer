@@ -247,7 +247,7 @@ function breadthFirst(board) {
             }
         }
     }
-    console.log('Finished A*');
+    console.log('Finished Breadth-First Search');
     board.animation = animation;
     if(animation.pathSteps) return true;
     return false;
@@ -255,7 +255,73 @@ function breadthFirst(board) {
 
 
 function depthFirst(board) {
+    console.log('Running Depth-First Search');
 
+    const animation = new AnimationPlan();
+
+    //get start and target nodes
+    const startNode = board.start;
+    const targetNode = board.target;
+
+    const stack = [];
+    const explored = [];
+    const prev = [];
+
+    //initialize g-value array and f-value array
+    for(let i = 0; i < board.rows; i++) {
+        for(let j = 0; j < board.cols; j++) {
+            let node = board.getNode(i, j);
+            //priorityQueue.push(node, Infinity);
+            explored[node.index] = false;
+        }
+    }
+
+    stack.push(startNode);
+
+    while(stack.length) {
+        const cur = stack.pop();
+        if(explored[cur.index]) continue;
+        animation.pushVisitStep(cur);
+
+        if(cur.index === targetNode.index) {
+            console.log('Target found')
+            const path = [];
+            if(prev[cur.index] || cur.index === startNode.index) {
+                let cur1 = cur;
+                while(cur1) {
+                    path.push(cur1);
+                    cur1 = prev[cur1.index];
+                    console.log(`cur1: ${cur1.index}`);
+                }
+            }
+            for(let v = path.length-1; v >= 0; v--) 
+                animation.pushPathStep(path[v]);
+            break;
+        }
+
+        explored[cur.index] = true;
+
+        //add neighbors to queue if they have not already been explored
+        const neighbors = [
+            board.getNode(cur.row-1, cur.col), //top
+            board.getNode(cur.row, cur.col+1), //right
+            board.getNode(cur.row+1, cur.col), //bottom
+            board.getNode(cur.row, cur.col-1)]; //left
+
+        for(let i in neighbors) {
+            const neighbor = neighbors[i];
+            if(!neighbor) continue;
+            const prevOfCur = prev[cur.index]
+            if(prevOfCur)
+                if(prevOfCur.index !== neighbor.index)
+                    prev[neighbor.index] = cur;
+            stack.push(neighbor);
+        }
+    }
+    console.log('Finished Depth-First Search');
+    board.animation = animation;
+    if(animation.pathSteps) return true;
+    return false;
 }
 
 
