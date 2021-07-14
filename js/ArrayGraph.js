@@ -135,7 +135,14 @@ class ArrayGraph {
         const val1 = this.pvalues[iDivIndex];
         const val2 = this.pvalues[jDivIndex];
         [this.pvalues[iDivIndex], this.pvalues[jDivIndex]] = [val2, val1];
-        this.panimation.pushStep(i, this.pdivs[iDivIndex], j, this.pdivs[jDivIndex]);
+        this.panimation.pushSwapStep(i, this.pdivs[iDivIndex], j, this.pdivs[jDivIndex]);
+    }
+
+    //adds change step to change index to newVal
+    addChangeStepWithIndexAndValue(index, newVal) {
+        const div = this.pdivs[index];
+        this.pvalues[index] = newVal;
+        this.panimation.pushChangeStep(newVal, div);
     }
 }
 

@@ -31,20 +31,24 @@ algoTypePicker.addEventListener('input', (e) => {
 const runBtn = document.getElementById('run-btn');
 const countParagraph = document.getElementById('count');
 runBtn.addEventListener('click', () => {
-    const algoType = algoTypePicker.value;
-    let success;
-    switch(algoType) {
-        case 'pathfinding':
-            success = runPathAlgorithm(pathAlgoPicker.value);
-            countParagraph.innerText = `Squares Explored: ${board.animation.visitSteps}`;
-            board.playAnimation();
-            break;
-        case 'sorting':
-            success = runSortAlgorithm(sortAlgoPicker.value);
-            countParagraph.innerText = `Swaps Performed: ${arrGraph.animation.steps}`;
-            arrGraph.playAnimation();
-            break;
-    }
+    setTimeout(() => { //delay 500ms so that any ongoing animations can finish
+        // board.reset();
+        // arrGraph.reset();
+        const algoType = algoTypePicker.value;
+        let success;
+        switch(algoType) {
+            case 'pathfinding':
+                success = runPathAlgorithm(pathAlgoPicker.value);
+                countParagraph.innerText = `Squares Explored: ${board.animation.visitSteps}`;
+                board.playAnimation();
+                break;
+            case 'sorting':
+                success = runSortAlgorithm(sortAlgoPicker.value);
+                countParagraph.innerText = `Swaps Performed: ${arrGraph.animation.steps}`;
+                arrGraph.playAnimation();
+                break;
+        }
+    }, 500);
 });
 
 const resetBtn = document.getElementById('reset-btn');

@@ -161,7 +161,7 @@ select {
     -webkit-animation: flash-green 0.75s normal forwards;
     -moz-animation: flash-green 0.75s normal forwards;
     -o-animation: flash-green 0.75s normal forwards;
-    animation: flash-green 0.75s normal forwards;
+    animation: flash-green 0.2s normal forwards;
     /* animation-iteration-count: 1; */
 }
 

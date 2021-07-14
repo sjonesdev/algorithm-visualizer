@@ -6,7 +6,7 @@ class SwapStep {
         this.valDiv2 = valDiv2;
     }
 
-    swap() {
+    run() {
         const vd1 = this.valDiv1;
         const vd2 = this.valDiv2;
         vd1.classList = 'value';
@@ -18,8 +18,26 @@ class SwapStep {
             });
         });
         
-        this.valDiv1.setAttribute('style', `height: ${this.val2*10 + 10}px;`);
         this.valDiv2.setAttribute('style', `height: ${this.val1*10 + 10}px;`);
+    }
+}
+
+
+class ChangeStep {
+    constructor(valDiv, newValue) {
+        this.valDiv = valDiv;
+        this.newValue = newValue;
+    }
+
+    run() {
+        const vd = this.valDiv;
+        vd.classList = 'value';
+        window.requestAnimationFrame(function(time) {
+            window.requestAnimationFrame(function(time) {
+                vd.classList = "value value-animation";
+            });
+        });
+        vd.setAttribute('style', `height: ${this.newValue*10 + 10}px;`);
     }
 }
 
@@ -55,9 +73,15 @@ class SortAnimationPlan {
      * 
      * @param {Node} node The node to push.
      */
-    pushStep(val1, valDiv1, val2, valDiv2) {
+    pushSwapStep(val1, valDiv1, val2, valDiv2) {
         this.pswapPlan.push(new SwapStep(val1, valDiv1, val2, valDiv2));
     }
+
+
+    pushChangeStep(val, valDiv) {
+        this.pswapPlan.push(new ChangeStep(valDiv, val));
+    }
+
 
     /**
      * Pops a node off the bottom of the path stack.
@@ -78,7 +102,7 @@ class SortAnimationPlan {
      * Runs the pathfinding and then path traveling animations stored in this animation plan. Empties the PathAnimationPlan instance in the process.
      */
     run() {
-        this.pid = setInterval(animate, 500, this);
+        this.pid = setInterval(animate, 200, this);
         //let pathInterval = null;
         //animates the visit portion of the animation then passes on to path
         function animate(animation) {
@@ -88,7 +112,7 @@ class SortAnimationPlan {
                 return;
             }
             const cur = animation.popStep();
-            cur.swap();
+            cur.run();
         }
     }
 
