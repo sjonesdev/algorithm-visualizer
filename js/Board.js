@@ -38,10 +38,10 @@ class Board {
     constructor(rows, columns) {
         this.prows = rows;
         this.pcols = columns;
-        const docbody = document.getElementsByTagName('body')[0];
+        const boardContainer = document.getElementById('board-container');
         this.pboardDiv = document.createElement('div');
         this.pboardDiv.id = 'board';
-        docbody.append(this.pboardDiv);
+        boardContainer.append(this.pboardDiv);
 
         for(let i = 0; i < rows; i++) {
             this.pdivs[i] = [];
@@ -201,10 +201,6 @@ class Board {
 
     resetAnimation() {
         this.panimation = new PathAnimationPlan();
-    }
-
-    toggleHide() {
-        this.pboardDiv.classList.toggle('hidden');
     }
 }
 

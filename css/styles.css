@@ -62,6 +62,15 @@ select {
     background: dimgrey;    
 }
 
+.hidden {
+    display: none;
+}
+
+
+/*--------------------
+    Pathfinding Styles
+--------------------*/
+
 #board {
     margin: 2rem auto;
     max-width: 1875px;
@@ -85,14 +94,10 @@ select {
     transition: background 500ms linear
 }
 
-.hidden {
-    display: none;
-}
+    /*--------------------
+        Node Styling
+    --------------------*/
 
-
-/*--------------------
-    Node Styling
---------------------*/
 .unvisited {
     /* --square-bg: var(--lightwhite); */
     background-color: var(--square-bg);
@@ -128,4 +133,46 @@ select {
 .path {
     /* --square-bg: rgb(235, 97, 240); */
     background-color: rgb(235, 97, 240);
+}
+
+
+/*--------------------
+    Sorting Styles
+--------------------*/
+#graph {
+    display: flex;
+    align-items: flex-end;
+    padding: 50px;
+    border: 3px solid grey;
+    width: max-content;
+    margin: auto; 
+}
+
+.value {
+    width: 10px;
+    /* height: 50px; */
+    margin: 10px;
+    background-color: black;
+    transition: height 500ms linear;
+    transition: background 250ms linear;
+}
+
+.value-animation {
+    -webkit-animation: flash-green 0.75s normal forwards;
+    -moz-animation: flash-green 0.75s normal forwards;
+    -o-animation: flash-green 0.75s normal forwards;
+    animation: flash-green 0.75s normal forwards;
+    /* animation-iteration-count: 1; */
+}
+
+@keyframes flash-green {
+    0% {
+        background: black;
+    }
+    50% {
+        background: lime;
+    }
+    100% {
+        background: black;
+    }
 }

@@ -1,28 +1,44 @@
+class SwapStep {
+    constructor(val1, valDiv1, val2, valDiv2) {
+        this.val1 = val1;
+        this.valDiv1 = valDiv1;
+        this.val2 = val2;
+        this.valDiv2 = valDiv2;
+    }
+
+    swap() {
+        const vd1 = this.valDiv1;
+        const vd2 = this.valDiv2;
+        vd1.classList = 'value';
+        vd2.classList = 'value';
+        window.requestAnimationFrame(function(time) {
+            window.requestAnimationFrame(function(time) {
+                vd1.classList = "value value-animation";
+                vd2.classList = "value value-animation";
+            });
+        });
+        
+        this.valDiv1.setAttribute('style', `height: ${this.val2*10 + 10}px;`);
+        this.valDiv2.setAttribute('style', `height: ${this.val1*10 + 10}px;`);
+    }
+}
+
+
 /**
  * Class to store animation plans for animating pathfinding algorithms. Contains FIFO stacks for pathing & visting and the number of steps in each stack.
  */
 class SortAnimationPlan {
     
-    /** @type {Array.<Node>} */
-    pvisitplan = [];
-
-    /** @type {Array.<Node>} */
-    ppathplan = [];
+    /** @type {Array.<SwapStep>} */
+    pswapPlan = [];
 
     pid = null;
 
     /**
      * @type {number} The number of the steps in the visit plan.
      */
-    get visitSteps() {
-        return this.pvisitplan.length;
-    }
-
-    /**
-     * @type {number} The number of steps in the path plan.
-     */
-    get pathSteps() {
-        return this.ppathplan.length;
+    get steps() {
+        return this.pswapPlan.length;
     }
 
     get id() {
@@ -39,27 +55,8 @@ class SortAnimationPlan {
      * 
      * @param {Node} node The node to push.
      */
-    pushVisitStep(node) {
-        if(!node) return;
-        this.pvisitplan.push(node);
-    }
-
-    /**
-     * Pops a node off the bottom of the visit stack.
-     * 
-     * @returns {Node} The node popped or undefined if the stack is empty. 
-     */
-    popVisitStep() {
-        return this.pvisitplan.shift();
-    }
-
-    /**
-     * Pushes a node to the top of the path plan stack.
-     * 
-     * @param {Node} node The node to push.
-     */
-    pushPathStep(node) {
-        this.ppathplan.push(node);
+    pushStep(val1, valDiv1, val2, valDiv2) {
+        this.pswapPlan.push(new SwapStep(val1, valDiv1, val2, valDiv2));
     }
 
     /**
@@ -67,13 +64,12 @@ class SortAnimationPlan {
      * 
      * @returns {Node} The node popped or undefined if the stack is empty.
      */
-    popPathStep() {
-        return this.ppathplan.shift();
+    popStep() {
+        return this.pswapPlan.shift();
     }
 
     reset() {
-        this.pvisitplan = [];
-        this.ppathplan = [];
+        this.pswapPlan = [];
         clearInterval(this.pid);
         this.pid = null;
     }
@@ -82,30 +78,17 @@ class SortAnimationPlan {
      * Runs the pathfinding and then path traveling animations stored in this animation plan. Empties the PathAnimationPlan instance in the process.
      */
     run() {
-        this.pid = setInterval(animateVisit, 10, this);
+        this.pid = setInterval(animate, 500, this);
         //let pathInterval = null;
-
         //animates the visit portion of the animation then passes on to path
-        function animateVisit(animation) {
+        function animate(animation) {
             //if no more steps
-            if(!animation.visitSteps) {
-                clearInterval(animation.id);
-                animation.id = setInterval(animatePath, 50, animation);
-                return;
-            }
-            const cur = animation.popVisitStep();
-            cur.visit();
-        }
-        
-        //animates the path portion of the animation
-        function animatePath(animation) {
-            //if no more steps
-            if(!animation.pathSteps) {
+            if(!animation.steps) {
                 clearInterval(animation.id);
                 return;
             }
-            const cur = animation.popPathStep();
-            cur.travel();
+            const cur = animation.popStep();
+            cur.swap();
         }
     }
 

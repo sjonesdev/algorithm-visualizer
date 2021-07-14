@@ -6,6 +6,7 @@ import Node from './Node.js';
 import Board from './Board.js';
 import ArrayGraph from './ArrayGraph.js';
 import { dijkstra, aStar, breadthFirst, depthFirst } from './path-algos.js';
+import { selectionSort, bubbleSort, insertionSort, mergeSort } from './sort-algos.js';
 import PathAnimationPlan from './PathAnimationPlan.js';
 
 const cols = 75, rows = 25;
@@ -19,13 +20,12 @@ const pathAlgoPickerDiv = document.getElementById('path-algo-picker');
 const sortAlgoPickerDiv = document.getElementById('sort-algo-picker');
 const pathAlgoPicker = document.getElementById('path-algo');
 const sortAlgoPicker = document.getElementById('sort-algo');
+const boardContainer = document.getElementById('board-container');
+const arrayGraphContainer = document.getElementById('arrayGraph-container');
 
-//TODO - fix this to ensure that the correct thing shows up according to the type selected, AKA not just toggling
+showSelectedAlgoStuff();
 algoTypePicker.addEventListener('input', (e) => {
-    pathAlgoPickerDiv.classList.toggle('hidden');
-    board.toggleHide();
-    sortAlgoPickerDiv.classList.toggle('hidden');
-    arrGraph.toggleHide();
+    showSelectedAlgoStuff();
 });
 
 const runBtn = document.getElementById('run-btn');
@@ -36,18 +36,40 @@ runBtn.addEventListener('click', () => {
     switch(algoType) {
         case 'pathfinding':
             success = runPathAlgorithm(pathAlgoPicker.value);
+            countParagraph.innerText = `Squares Explored: ${board.animation.visitSteps}`;
+            board.playAnimation();
             break;
         case 'sorting':
+            success = runSortAlgorithm(sortAlgoPicker.value);
+            countParagraph.innerText = `Swaps Performed: ${arrGraph.animation.steps}`;
+            arrGraph.playAnimation();
             break;
     }
-    countParagraph.innerText = `Squares Explored: ${board.animation.visitSteps}`;
-    board.playAnimation();
 });
 
 const resetBtn = document.getElementById('reset-btn');
 resetBtn.addEventListener('click', () => {
     board.reset();
+    arrGraph.reset();
 });
+
+function showSelectedAlgoStuff() {
+    const type = algoTypePicker.value;
+    switch(type) {
+        case 'pathfinding':
+            pathAlgoPickerDiv.classList.remove('hidden');
+            boardContainer.classList.remove('hidden');
+            sortAlgoPickerDiv.classList.add('hidden');
+            arrayGraphContainer.classList.add('hidden');
+            break;
+        case 'sorting':
+            pathAlgoPickerDiv.classList.add('hidden');
+            boardContainer.classList.add('hidden');
+            sortAlgoPickerDiv.classList.remove('hidden');
+            arrayGraphContainer.classList.remove('hidden');
+            break;
+    }
+}
 
 function runPathAlgorithm(algo) {
     let success;
@@ -63,6 +85,28 @@ function runPathAlgorithm(algo) {
             break;
         case 'depth-first':
             success = depthFirst(board);
+            break;
+        default:
+            success = false;
+            break;
+    }
+    return success;
+}
+
+function runSortAlgorithm(algo) {
+    let success;
+    switch(algo) {
+        case 'selection':
+            success = selectionSort(arrGraph);
+            break;
+        case 'bubble':
+            success = bubbleSort(arrGraph);
+            break;
+        case 'insertion':
+            success = insertionSort(arrGraph);
+            break;
+        case 'merge':
+            success = mergeSort(arrGraph);
             break;
         default:
             success = false;
