@@ -66,15 +66,17 @@ select {
 
 #board {
     margin: 2rem auto;
-    max-width: 1875px;
+    width: max-content;
+    max-width: min(95%, 1875px);
     border-top: 3px solid grey;
     border-left: 3px solid grey;
     border-bottom: 2px solid grey;
     border-right: 2px solid grey;
 }
 
-.row {
+.gridrow {
     display: flex;
+    /* flex-wrap: nowrap; */
 }
 
 .square {

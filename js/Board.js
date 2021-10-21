@@ -47,8 +47,8 @@ class Board {
             this.pdivs[i] = [];
             this.pnodes[i] = [];
             let row = document.createElement('div');
-            row.classList = 'row'
-            row.id = 'row-' + i;
+            row.classList = 'gridrow'
+            row.id = 'gridrow-' + i;
             this.pboardDiv.append(row);
             for(let j = 0; j < columns; j++) {
                 let square = document.createElement('div');
