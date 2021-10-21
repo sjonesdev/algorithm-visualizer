@@ -39,6 +39,10 @@ select {
     padding: 0.5rem 2rem;
 }
 
+.title h1 {
+    font-size: xx-large;
+}
+
 .dropdown {
     margin: 0 2rem;
     font-size: 1.5rem;
@@ -47,19 +51,8 @@ select {
 .btn {
     font-size: large;
     margin: 0 1em;
-    width: 6em;
-    height: 2em;
-    text-decoration: none;
-    background: grey;
-    color: whitesmoke;
-    border: 0;
-    transition: background 200ms linear;
-}
-
-.btn:hover,
-.btn:focus {
-    border: 1px solid whitesmoke;
-    background: dimgrey;    
+    width: 5em;
+    height: 2.25em;
 }
 
 .hidden {
