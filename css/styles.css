@@ -68,6 +68,16 @@ p {
     display: none;
 }
 
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+
 
 /*--------------------
     Pathfinding Styles
@@ -96,8 +106,9 @@ p {
     border-radius: 10px;
     background: lightgrey;
     color: black;
-    transition: background linear 500ms;
-    transition: color linear 500ms;
+    transition: background linear 250ms;
+    transition: color linear 250ms;
+    cursor: default;
 }
 
 .node-info > * {
@@ -164,7 +175,7 @@ p {
 
     .wall {
         /* --square-bg: grey; */
-        background-color: grey;
+        background-color: darkgray;
     }
 
     .square--weighted {

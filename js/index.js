@@ -22,6 +22,7 @@ const pathAlgoPicker = document.getElementById('path-algo');
 const sortAlgoPicker = document.getElementById('sort-algo');
 const boardContainer = document.getElementById('board-container');
 const arrayGraphContainer = document.getElementById('arrayGraph-container');
+const placeOpts = document.getElementsByClassName('place-opt');
 
 showSelectedAlgoStuff();
 algoTypePicker.addEventListener('input', (e) => {
@@ -56,6 +57,17 @@ resetBtn.addEventListener('click', () => {
     board.reset();
     arrGraph.reset();
 });
+
+let selectedPlaceOpt = placeOpts[0];
+for(const placeOpt of placeOpts) {
+    placeOpt.addEventListener('click', e => {
+        const target = e.target;
+        if(Object.is(selectedPlaceOpt, placeOpt)) return;
+        selectedPlaceOpt.classList.remove('selected');
+        placeOpt.classList.add('selected');
+        selectedPlaceOpt = placeOpt;
+    });
+}
 
 function showSelectedAlgoStuff() {
     const type = algoTypePicker.value;
