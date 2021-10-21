@@ -59,6 +59,9 @@ resetBtn.addEventListener('click', () => {
 });
 
 let selectedPlaceOpt = placeOpts[0];
+const placeOptSelect = document.getElementById('place-opt-select');
+placeOptSelect.value = selectedPlaceOpt.childNodes[3].textContent;
+console.log(placeOptSelect.value);
 for(const placeOpt of placeOpts) {
     placeOpt.addEventListener('click', e => {
         const target = e.target;
@@ -66,6 +69,7 @@ for(const placeOpt of placeOpts) {
         selectedPlaceOpt.classList.remove('selected');
         placeOpt.classList.add('selected');
         selectedPlaceOpt = placeOpt;
+        placeOptSelect.value = selectedPlaceOpt.childNodes[3].textContent;
     });
 }
 

@@ -165,6 +165,8 @@ class Node {
      * Increases the weight of the node if not already.
      */
     weighdown() {
+        if(this.type === Node.TARGET || this.type === Node.START) return;
+        if(this.type === Node.WALL) this.makeNormal();
         this.pweighted = true;
         this.psquare.classList.add('square--weighted');
     }

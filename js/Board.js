@@ -36,6 +36,8 @@ class Board {
      * @param {number} columns The number of columns to initialize in the board.
      */
     constructor(rows, columns) {
+        this.placeOptSelect = document.getElementById('place-opt-select');
+
         this.prows = rows;
         this.pcols = columns;
         const boardContainer = document.getElementById('board-container');
@@ -54,6 +56,7 @@ class Board {
                 let square = document.createElement('div');
                 square.classList = 'square'
                 square.id = `square-${i}-${j}`;
+                square.onclick = () => this.nodeOnClick(i, j);
                 this.pdivs[i][j] = square;
                 row.append(square);
                 let index = i*columns + j;
@@ -96,6 +99,7 @@ class Board {
     set start(node) {
         const compNode = this.getNode(node.row, node.col);
         if(!Object.is(compNode, node)) return;
+        if(this.pstart) this.pstart.makeNormal();
         this.pstart = node;
         node.makeStart();
     }
@@ -113,12 +117,31 @@ class Board {
      set target(node) {
         const compNode = this.getNode(node.row, node.col);
         if(!Object.is(compNode, node)) return;
+        if(this.ptarget) this.ptarget.makeNormal();
         this.ptarget = node;
         node.makeTarget();
     }
 
     set animation(anim) {
         this.panimation = anim;
+    }
+
+    nodeOnClick(row, col) {
+        const setTypeStr = this.placeOptSelect.value;
+        switch(setTypeStr) {
+            case 'Start':
+                this.setStartNode(row, col);
+                break;
+            case 'Target':
+                this.setTargetNode(row, col);
+                break;
+            case 'Wall':
+                this.addWallNode(row, col);
+                break;
+            case 'Weighted':
+                this.addWeightedNode(row, col);
+                break;
+        }
     }
 
     /**
@@ -143,6 +166,18 @@ class Board {
         const node = this.getNode(row, col);
         if(!node) return;
         this.target = node;
+    }
+
+    addWeightedNode(row, col) {
+        const node = this.getNode(row, col);
+        if(!node) return;
+        node.weighdown();
+    }
+
+    addWallNode(row, col) {
+        const node = this.getNode(row, col);
+        if(!node) return;
+        node.makeWall();
     }
 
     /**
