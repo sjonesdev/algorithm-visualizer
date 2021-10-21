@@ -22,9 +22,18 @@ h1 {
     margin: 0;
 }
 
+h3 {
+    width: max-content;
+    margin-bottom: 0;
+}
+
 select {
     font-size: x-large;
     width: 12em;
+}
+
+p {
+    font-size: x-large;
 }
 
 #algo-type {
@@ -64,6 +73,42 @@ select {
     Pathfinding Styles
 --------------------*/
 
+#info, #grid-place-opts {
+    margin: auto;
+    width: fit-content;
+    max-width: 95%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#info > h3, #grid-place-opts > h3 {
+    padding-top: 0.5rem;
+}
+
+.node-info {
+    display: flex;
+    align-items: center;
+    max-width: max-content;
+    margin: 0.25rem 0.5rem;
+    padding: 0.15rem 0.5rem;
+    border: 2px solid grey;
+    border-radius: 10px;
+    background: lightgrey;
+    color: black;
+    transition: background linear 500ms;
+    transition: color linear 500ms;
+}
+
+.node-info > * {
+    padding: 0 0.25rem;
+}
+
+.selected {
+    background: grey;
+    color: white;
+}
+
 #board {
     margin: 2rem auto;
     width: max-content;
@@ -93,42 +138,46 @@ select {
         Node Styling
     --------------------*/
 
-.unvisited {
-    /* --square-bg: var(--lightwhite); */
-    background-color: var(--square-bg);
-}
+    .unvisited {
+        /* --square-bg: var(--lightwhite); */
+        background-color: var(--square-bg);
+    }
 
-.visited {
-    /* --square-bg: rgb(67, 226, 210); */
-    background-color: rgb(67, 226, 210);
-}
+    .visiting {
+        background-color: rgb(177, 7, 192);
+    }
 
-.start {
-    /* --square-bg: greenyellow; */
-    background-color: greenyellow;
-}
+    .visited {
+        /* --square-bg: rgb(67, 226, 210); */
+        background-color: rgb(67, 226, 210);
+    }
 
-.target {
-    /* --square-bg: red; */
-    background-color: red;
-}
+    .start {
+        /* --square-bg: greenyellow; */
+        background-color: greenyellow;
+    }
 
-.wall {
-    /* --square-bg: grey; */
-    background-color: grey;
-}
+    .target {
+        /* --square-bg: red; */
+        background-color: red;
+    }
 
-.square--weighted {
-    background-color: #e5e5f7;
-    opacity: 0.8;
-    background-size: 10px 10px;
-    background-image: repeating-linear-gradient(45deg, #444cf7 0, #444cf7 1px, #e5e5f7 0, #e5e5f7 50%); 
-}
+    .wall {
+        /* --square-bg: grey; */
+        background-color: grey;
+    }
 
-.path {
-    /* --square-bg: rgb(235, 97, 240); */
-    background-color: rgb(235, 97, 240);
-}
+    .square--weighted {
+        background-color: #e5e5f7;
+        opacity: 0.8;
+        background-size: 10px 10px;
+        background-image: repeating-linear-gradient(45deg, #444cf7 0, #444cf7 1px, #e5e5f7 0, #e5e5f7 50%); 
+    }
+
+    .path {
+        /* --square-bg: rgb(235, 97, 240); */
+        background-color: rgb(235, 97, 240);
+    }
 
 
 /*--------------------
