@@ -19,6 +19,7 @@ class SwapStep {
         });
         
         this.valDiv2.setAttribute('style', `height: ${this.val1*10 + 10}px;`);
+        this.valDiv1.setAttribute('style', `height: ${this.val2*10 + 10}px;`);
     }
 }
 
