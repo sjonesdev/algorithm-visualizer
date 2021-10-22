@@ -64,10 +64,6 @@ p {
     height: 2.25em;
 }
 
-.hidden {
-    display: none;
-}
-
 /* .noselect {
     -webkit-touch-callout: none; /* iOS Safari *
       -webkit-user-select: none; /* Safari *
@@ -230,4 +226,8 @@ p {
     100% {
         background: black;
     }
+}
+
+.hidden {
+    display: none;
 }

@@ -23,6 +23,8 @@ const sortAlgoPicker = document.getElementById('sort-algo');
 const boardContainer = document.getElementById('board-container');
 const arrayGraphContainer = document.getElementById('arrayGraph-container');
 const placeOpts = document.getElementsByClassName('place-opt');
+const exploreInfos = document.getElementsByClassName('explore-info');
+const swapCount = document.getElementById('swap-count-container');
 
 showSelectedAlgoStuff();
 algoTypePicker.addEventListener('input', (e) => {
@@ -30,7 +32,8 @@ algoTypePicker.addEventListener('input', (e) => {
 });
 
 const runBtn = document.getElementById('run-btn');
-const countParagraph = document.getElementById('count');
+const exploreCountParagraph = document.getElementById('explore-count');
+const swapCountParagraph = document.getElementById('swap-count');
 runBtn.addEventListener('click', () => {
     setTimeout(() => { //delay 500ms so that any ongoing animations can finish
         // board.reset();
@@ -40,12 +43,12 @@ runBtn.addEventListener('click', () => {
         switch(algoType) {
             case 'pathfinding':
                 success = runPathAlgorithm(pathAlgoPicker.value);
-                countParagraph.innerText = `Squares Explored: ${board.animation.visitSteps}`;
+                exploreCountParagraph.innerText = `Squares Explored: ${board.animation.visitSteps}`;
                 board.playAnimation();
                 break;
             case 'sorting':
                 success = runSortAlgorithm(sortAlgoPicker.value);
-                countParagraph.innerText = `Swaps Performed: ${arrGraph.animation.steps}`;
+                swapCountParagraph.innerText = `Swaps Performed: ${arrGraph.animation.steps}`;
                 arrGraph.playAnimation();
                 break;
         }
@@ -79,14 +82,18 @@ function showSelectedAlgoStuff() {
         case 'pathfinding':
             pathAlgoPickerDiv.classList.remove('hidden');
             boardContainer.classList.remove('hidden');
+            for(const exploreInfo of exploreInfos) exploreInfo.classList.remove('hidden');
             sortAlgoPickerDiv.classList.add('hidden');
             arrayGraphContainer.classList.add('hidden');
+            swapCount.classList.add('hidden');
             break;
         case 'sorting':
             pathAlgoPickerDiv.classList.add('hidden');
             boardContainer.classList.add('hidden');
+            for(const exploreInfo of exploreInfos) exploreInfo.classList.add('hidden');
             sortAlgoPickerDiv.classList.remove('hidden');
             arrayGraphContainer.classList.remove('hidden');
+            swapCount.classList.remove('hidden');
             break;
     }
 }
